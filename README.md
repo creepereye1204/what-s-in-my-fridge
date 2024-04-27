@@ -1,2 +1,2 @@
-# please-take-care-of-the-refrigerator
+# what's-in-my-fridge
 모바일 프로그래밍 5조
