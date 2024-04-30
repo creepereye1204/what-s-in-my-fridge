@@ -1,5 +1,5 @@
 # 냉장고를 부탁해 (What's In My Refridge)
-
+![Uploading Refrigerator.png…]()
 ## 구현기능
 ### 냉장고 관리
 - 사용자가 구매한 식재료를 냉장고에 추가, 삭제 등 관리
