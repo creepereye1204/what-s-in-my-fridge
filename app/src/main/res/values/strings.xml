@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">what\'s-in-my-fridge</string>
+    <string name="app_name_ko">냉장고를 부탁해</string>
+    <string name="myRefrigerator">나의 냉장고</string>
+    <string name="showReceipt">레시피 보기</string>
+    <string name="community">커뮤니티</string>
+</resources>
