@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>냉장고를 부탁해</title>
+    <!-- Tailwind CSS를 CDN에서 로드 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts 설정 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <style>
+        /* Jua 폰트 설정 */
+        .jua-regular {
+            font-family: "Jua", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .Jua-font {
+            font-family: 'Jua';
+        }
+
+        /* 슬라이드 메뉴 스타일 */
+        .slide-menu {
+            position: fixed;
+            top: 0;
+            left: -300px; /* 화면에 보이지 않도록 설정 */
+            width: 300px;
+            height: 100%;
+            background-color: #D1DCFF;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+            transition: left 0.3s ease; /* 애니메이션 효과 */
+        }
+
+        /* 체크박스가 체크되었을 때 슬라이드 메뉴가 왼쪽 0 위치로 이동 */
+        input[type="checkbox"]:checked ~ .slide-menu {
+            left: 0;
+        }
+
+        #menuToggle {
+            display: none; /* 체크박스 숨기기 */
+        }
+
+        .menu-icon {
+            cursor: pointer; /* 포인터 커서 표시 */
+        }
+
+        input:checked ~ .slide-menu {
+            transform: translateX(0);
+        }
+
+        .custom-hr {
+            border: 0;
+            height: 4px; /* 두께 설정 */
+            background-color: #13438C; /* 색상 설정 */
+            margin: 20px 0; /* 상하 여백 */
+        }
+    </style>
+    <!-- React와 ReactDOM CDN 추가 -->
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <!-- Babel CDN 추가 -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body class="bg-blue-100 h-screen flex flex-col items-center font-sans text-center">
+    <!-- React 컴포넌트를 렌더링할 루트 엘리먼트 -->
+    <div id="root" class="w-11/12 bg-blue-100 p-5 rounded-2xl flex flex-col items-center space-y-8 mt-5"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        /* 커뮤니티 링크 컴포넌트 */
+        const Community = () => (
+            <a href="https://www.example.com" className="block w-full">
+                <div className="bg-blue-200 border-sky-900 rounded-2xl flex items-center justify-center border-4 h-36 w-full">
+                    <div className="text-2xl text-blue-900">
+                        <img id="Community" src="https://i.imgur.com/PrT9R2b.png" alt="커뮤니티" className="max-w-full h-32"/>
+                    </div>
+                </div>
+            </a>
+        );
+
+        /* 나의 냉장고 링크 컴포넌트 */
+        const MyFridge = () => (
+            <a href="https://www.example.com" className="block w-full">
+                <div className="bg-blue-200 border-sky-900 rounded-2xl flex items-center justify-center border-4 h-36 w-full">
+                    <div className="text-2xl text-blue-900">
+                        <img id="MyFridge" src="https://i.imgur.com/15U5wP2.png" alt="나의 냉장고" className="max-w-full h-32"/>
+                    </div>
+                </div>
+            </a>
+        );
+
+        /* 레시피 추천 링크 컴포넌트 */
+        const ShowRecipes = () => (
+            <a href="https://www.example.com" className="block w-full">
+                <div className="bg-blue-200 border-sky-900 rounded-2xl flex items-center justify-center border-4 h-36 w-full">
+                    <div className="text-2xl text-blue-900">
+                        <img id="ShowRecipes" src="https://imgur.com/HpLYjZs.png" alt="레시피 추천" className="max-w-full h-32"/>
+                    </div>
+                </div>
+            </a>
+        );
+
+        /* 메인 홈 컴포넌트 */
+        const Home = () => {
+            const [menuOpen, setMenuOpen] = useState(false); // 메뉴 상태 관리
+
+            const toggleMenu = () => {
+                console.log("Menu toggled. Current state:", menuOpen); // 현재 상태 콘솔 출력
+                setMenuOpen(!menuOpen); // 메뉴 상태 토글
+            };
+
+            useEffect(() => {
+                const menuToggle = document.getElementById("menuToggle");
+                if (menuToggle) {
+                    menuToggle.checked = menuOpen; // 메뉴 상태에 따라 체크박스 상태 변경
+                }
+            }, [menuOpen]);
+
+            return (
+                <div className="w-full flex flex-col items-center space-y-8 mt-5">
+                    <div className="flex justify-between items-start w-full h-40">
+                        <label htmlFor="menuToggle" className="flex-none" onClick={toggleMenu}>
+                            <img id="menu" src="https://i.imgur.com/hFA6mNi.png" alt="슬라이드 메뉴" className="w-8 h-8 h-auto menu-icon"/>
+                        </label>
+                        <img id="what-in-my-refridge" src="https://i.imgur.com/yk6aldW.png" alt="프로젝트 이미지" className="max-w-64 h-auto menu-icon mx-auto flex-grow text-center"/>
+                        <input type="checkbox" id="menuToggle" className="hidden"/> {/* 체크박스 숨기기 */}
+                        <div className={`slide-menu ${menuOpen ? 'left-0' : 'left-[-300px]'}`}> {/* 메뉴 상태에 따라 슬라이드 메뉴 위치 설정 */}
+                            <div className="p-5">
+                                <h2 className="Jua-font text-5xl text-blue-900 mb-4">메뉴</h2>
+                                <hr className="custom-hr"/>
+                                <ul>   
+                                    <li><a href="#" className="Jua-font block py-2 text-blue-900 text-4xl">마이 프로필</a></li>
+                                    <hr className="custom-hr"/>
+                                    <li><a href="#" className="Jua-font block py-2 text-blue-900 text-4xl">나의 냉장고</a></li>
+                                    <hr className="custom-hr"/>
+                                    <li><a href="#" className="Jua-font block py-2 text-blue-900 text-4xl">재료 추가</a></li>
+                                    <hr className="custom-hr"/>
+                                </ul>
+                                <label htmlFor="menuToggle" className="Jua-font cursor-pointer text-sky-900 text-4xl" onClick={toggleMenu}>닫기</label>
+                            </div>
+                        </div>
+                    </div>
+                    <MyFridge /> {/* 나의 냉장고 컴포넌트 */}
+                    <ShowRecipes /> {/* 레시피 추천 컴포넌트 */}
+                    <Community /> {/* 커뮤니티 컴포넌트 */}
+                </div>
+            );
+        };
+
+        // React 컴포넌트를 루트 엘리먼트에 렌더링
+        ReactDOM.render(<Home />, document.getElementById('root'));
+    </script>
+
+</body>
+</html>
+
+
+
