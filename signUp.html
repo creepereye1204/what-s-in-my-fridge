@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <style>
+        .jua-regular {
+            font-family: "Jua", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .Jua-font {
+            font-family: 'Jua';
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-96 bg-blue-100 font-sans">
+    <div class="bg-blue-100 p-6 rounded-lg  w-80">
+        <h2 class="Jua-font text-black mb-6 text-3xl text-center font-bold">회원가입</h2>
+        <form id="signUpForm">
+            <label for="id" class="block mb-2 Jua-font">아이디</label>
+            <input type="text" id="id" required
+                   class="w-full p-2 mb-4 border border-gray-300 rounded focus:outline-none " />
+            
+            <label for="nickname" class="block mb-2 Jua-font">닉네임</label>
+            <input type="text" id="nickname" required
+                   class="w-full p-2 mb-4 border border-gray-300 rounded focus:outline-none " />
+            
+            <label for="password" class="block mb-2 Jua-font">비밀번호</label>
+            <input type="password" id="password" required
+                   class="w-full p-2 mb-4 border border-gray-300 rounded focus:outline-none " />
+            
+            <label for="passwordConfirm" class="block mb-2 Jua-font">비밀번호 확인</label>
+            <input type="password" id="passwordConfirm" required
+                   class="w-full p-2 mb-4 border border-gray-300 rounded focus:outline-none " />
+            
+            <button type="submit"
+                    class="Jua-font mt-6 w-full p-2 text-white bg-blue-900 rounded hover:bg-blue-800">
+                가입하기
+            </button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('signUpForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const id = document.getElementById('id').value;
+            const nickname = document.getElementById('nickname').value;
+            const password = document.getElementById('password').value;
+            const passwordConfirm = document.getElementById('passwordConfirm').value;
+            
+            if (password !== passwordConfirm) {
+                alert('비밀번호가 다릅니다');
+            } else {
+                console.log('아이디 : ' + id);
+                console.log('닉네임 : ' + nickname);
+                console.log('비밀번호 : ' + password);
+                alert('회원가입 완료');
+            }
+        });
+    </script>
+</body>
+</html>
