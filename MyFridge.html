@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나의 냉장고</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <!-- Google Fonts 설정 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <style>
+        /* Jua 폰트 설정 */
+        .jua-regular {
+            font-family: "Jua", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .Jua-font {
+            font-family: 'Jua';
+        }
+
+        /* 메뉴 아이콘 크기 조정 */
+        .menu-icon {
+            width: 2rem;
+            height: 2rem;
+        }
+    </style>
+</head>
+<body class="bg-blue-100">
+    <div id="root" class="flex flex-col items-center justify-center min-h-screen py-4"></div>
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        const MyFridge = () => {
+          const [ingredients, setIngredients] = useState([]);
+
+          const fetchData = () => {
+            const serverData = [
+              { ingredient: '계란', count: 10, storeMethod: '냉장', expireDate: '2024-05-18' },
+              { ingredient: '오징어', count: 5, storeMethod: '냉동', expireDate: '2024-05-19' },
+              { ingredient: '당근', count: 8, storeMethod: '냉장', expireDate: '2024-05-20' },
+              { ingredient: '양배추', count: 2, storeMethod: '냉장', expireDate: '2024-05-30' },
+              { ingredient: '고기', count: 500, storeMethod: '냉동', expireDate: '2024-07-11' },
+              { ingredient: '양상추', count: 300, storeMethod: '냉장', expireDate: '2024-05-17' },
+            ];
+
+            const today = new Date();
+            const newData = serverData.map((item) => {
+              const expireDate = new Date(item.expireDate);
+              const diffTime = expireDate.getTime() - today.getTime();
+              const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+              return { ...item, dDay: diffDays };
+            });
+
+            setIngredients(newData);
+          };
+
+          useEffect(() => {
+            fetchData();
+          }, []);
+
+          const handleRemoveIngredient = (index) => {
+            const newIngredients = ingredients.filter((_, i) => i !== index);
+            setIngredients(newIngredients);
+          };
+
+          return (
+            <div className="bg-blue-100 p-6 rounded w-full max-w-md">
+              <div className="sticky top-0 bg-blue-100 flex justify-between items-center ">
+                <a href="https://www.example.com" className="block absolute left-0">
+                  <img id="menu" src="https://i.imgur.com/p5rWnHR.png" alt="재료 추가" className="menu-icon"/>
+                </a>
+                <h2 className="flex-grow text-center text-5xl Jua-font text-blue-900">나의 냉장고</h2>
+              </div>
+              {ingredients.length > 0 ? (
+                <ul className="list-disc pl-5 space-y-2">
+                  {ingredients.map((ingredient, index) => (
+                    <li key={index} className="flex justify-between sm:flex-row items-center border-b-4 border-blue-900 pb-2 mb-2">
+                      <div>
+                        <img
+                          src={`/images/${ingredient.ingredient}.png`}
+                          alt={ingredient.ingredient}
+                          className="inline-block mr-2"
+                        />
+                        <div className="grid grid-cols-2 gap-2 w-full Jua-font text-blue-900">
+                          <span>재료 이름:</span> <span>{ingredient.ingredient}</span>
+                          <span>수량:</span> <span>{ingredient.count} {ingredient.ingredient === '고기' ? 'g' : '개'}</span>
+                          <span>보관 방법:</span> <span>{ingredient.storeMethod === '냉동' ? '냉동보관' : '냉장보관'}</span>
+                          <span>날짜:</span> <span>D-{ingredient.dDay}</span>
+                        </div>
+                      </div>
+                      <button className="ml-4 px-2 py-1 bg-red-500 text-white rounded" onClick={() => handleRemoveIngredient(index)}>삭제</button>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>냉장고에 재료가 없습니다.</p>
+              )}
+            </div>
+          );
+        };
+
+        ReactDOM.render(<MyFridge />, document.getElementById('root'));
+    </script>
+</body>
+</html>
